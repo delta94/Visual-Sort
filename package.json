@@ -1,5 +1,6 @@
 {
   "name": "simple-sort",
+  "homepage": "https://ericellb.github.io/Doctor-Sort",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,6 +11,7 @@
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.1",
     "chart.js": "^2.8.0",
+    "gh-pages": "^2.0.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0",
@@ -19,7 +21,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean": "rm -rf build/",
+    "predeploy": "npm run clean && npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

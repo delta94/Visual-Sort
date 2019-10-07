@@ -36,12 +36,12 @@ export default function Dashboard() {
       }
     }
 
-    return arr;
+    return { dataSet: arr, actionBuffer: tempBuffer };
   };
 
   const changeData = () => {
-    bubbleSort(sortingArray);
-    setActionBuffer(tempBuffer);
+    let result = bubbleSort(sortingArray);
+    setActionBuffer(result.actionBuffer);
   };
 
   useEffect(() => {
