@@ -1,6 +1,6 @@
 # Doctor Sort
 
-> Visualize Sorting Algorithms, written in TypeScript using React and ChartJS
+> Visualize Sorting Algorithms, written in TypeScript using React and ChartJS Live Version @ https://ericellb.github.io/Doctor-Sort/
 
 The goal of Doctor Sort, was to deepen my understanding of Sorting Algorithms, while providing people the opportunity to better understand and visualize how Sorting Algorithms work.
 
