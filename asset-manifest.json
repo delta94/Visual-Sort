@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/Doctor-Sort/static/css/main.6f7c90e3.chunk.css",
+    "main.js": "/Doctor-Sort/static/js/main.dda6b2ba.chunk.js",
+    "main.js.map": "/Doctor-Sort/static/js/main.dda6b2ba.chunk.js.map",
+    "runtime-main.js": "/Doctor-Sort/static/js/runtime-main.231c31c6.js",
+    "runtime-main.js.map": "/Doctor-Sort/static/js/runtime-main.231c31c6.js.map",
+    "static/js/2.6ceb00af.chunk.js": "/Doctor-Sort/static/js/2.6ceb00af.chunk.js",
+    "static/js/2.6ceb00af.chunk.js.map": "/Doctor-Sort/static/js/2.6ceb00af.chunk.js.map",
+    "index.html": "/Doctor-Sort/index.html",
+    "precache-manifest.e1fb7516897fff7770bb83f88581ac96.js": "/Doctor-Sort/precache-manifest.e1fb7516897fff7770bb83f88581ac96.js",
+    "service-worker.js": "/Doctor-Sort/service-worker.js",
+    "static/css/main.6f7c90e3.chunk.css.map": "/Doctor-Sort/static/css/main.6f7c90e3.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.231c31c6.js",
+    "static/js/2.6ceb00af.chunk.js",
+    "static/css/main.6f7c90e3.chunk.css",
+    "static/js/main.dda6b2ba.chunk.js"
+  ]
+}
