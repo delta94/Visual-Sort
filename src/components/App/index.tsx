@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
+import Dashboard from '../Dashboard';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import './style.css';
@@ -9,6 +10,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <Header />
+      <Dashboard />
       <Footer />
     </ThemeProvider>
   );

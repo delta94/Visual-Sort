@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, makeStyles, Container } from '@material-ui/core';
-import { OfflineBolt } from '@material-ui/icons';
+import { Face } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +32,7 @@ export default function Header() {
       <Container>
         <Toolbar>
           <Typography variant="h6" className={classes.title + ' ' + classes.flex + ' ' + classes.responsiveText}>
-            <OfflineBolt className={classes.icon} /> Doctor Sort
+            <Face className={classes.icon} /> Doctor Sort
           </Typography>
         </Toolbar>
       </Container>
