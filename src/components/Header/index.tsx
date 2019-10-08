@@ -32,7 +32,7 @@ export default function Header() {
       <Container>
         <Toolbar>
           <Typography variant="h6" className={classes.title + ' ' + classes.flex + ' ' + classes.responsiveText}>
-            <Face className={classes.icon} /> Doctor Sort
+            <Face className={classes.icon} /> Visual Sort
           </Typography>
         </Toolbar>
       </Container>
