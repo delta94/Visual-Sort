@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,KACE,kBAEF,CACA,UAFE,WAMF,CAJA,KACE,QAAS,CACT,kBAEF,CAEA,MACE,WACF","file":"main.3fdc8253.chunk.css","sourcesContent":["html {\n  font-family: 'Roboto';\n  height: 100%;\n}\nbody {\n  margin: 0;\n  background: #121212;\n  height: 100%;\n}\n\n#root {\n  height: 100%;\n}\n"]}
