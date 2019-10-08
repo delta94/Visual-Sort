@@ -1,5 +1,13 @@
 import { ActionBuffer } from '../AlgoChart';
 
+// Custom type
+export type SortingAlgorithms = (
+  arr: number[]
+) => {
+  dataSet: number[];
+  actionBuffer: ActionBuffer[];
+};
+
 let tempBuffer: ActionBuffer[] = [];
 
 // Swap method!
@@ -20,7 +28,6 @@ const lessThan = (arr: number[], i: number, j: number) => {
 export const bubbleSort = (arr: number[]) => {
   tempBuffer = [];
   let len = arr.length;
-  let end: number;
 
   for (let i = 0; i < len; i++) {
     for (let j = 0, end = len - i; j < end; j++) {

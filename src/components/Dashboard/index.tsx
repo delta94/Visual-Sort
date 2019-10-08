@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Slider, makeStyles } from '@material-ui/core';
 import AlgoChart, { ActionBuffer } from '../AlgoChart';
-import { bubbleSort } from './Algos';
-import { classes } from 'istanbul-lib-coverage';
+import { bubbleSort, SortingAlgorithms } from './Algos';
 
 const useStyles = makeStyles(theme => ({
   mainContainer: {
@@ -15,16 +14,18 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
   const classes = useStyles({});
-  const [sortingArray, setSortingArray] = useState();
-  const [actionBuffer, setActionBuffer] = useState<ActionBuffer[]>();
-  const [arrLength, setArrLength] = useState(10);
-  const [chartKey, setChartKey] = useState(0);
+  // State for AlgoChart Props
+  const [startingArray, setStartingArray] = useState();
+  const [actionBuffer, setActionBuffer] = useState<ActionBuffer[] | undefined>();
   const [stepTime, setStepTime] = useState(600);
 
-  // On mount randomize and sort
-  useEffect(() => {
-    randomizeArray();
-  }, []);
+  // Key to remove chart from dom
+  const [chartKey, setChartKey] = useState(0);
+
+  // State to control size of Array and Algo used
+  const [arrLength, setArrLength] = useState(10);
+  const [selectedAlgo, setSelectedAlgo] = useState(() => bubbleSort);
+  const [sortingArray, setSortingArray] = useState<number[]>();
 
   // Randomizes the values in array
   const randomizeArray = () => {
@@ -32,21 +33,39 @@ export default function Dashboard() {
     for (let i = 0; i < arrLength; i++) {
       arr.push(Math.ceil(Math.random() * 10));
     }
-    let result = bubbleSort([...arr]);
-    setSortingArray(arr);
-    setActionBuffer(result.actionBuffer);
+    setSortingArray([...arr]);
+    setStartingArray([...arr]);
+    setActionBuffer(undefined);
     setChartKey(chartKey + 1);
   };
+
+  // Calls Selected Sorting Algo, with Sorting Arary
+  const sort = (sortingAlgo: SortingAlgorithms) => {
+    if (sortingArray) {
+      let result = sortingAlgo([...sortingArray]);
+      setActionBuffer(result.actionBuffer);
+    }
+  };
+
+  // Start sorting on mount
+  useEffect(() => {
+    randomizeArray();
+  }, []);
 
   return (
     <Container className={classes.mainContainer}>
       <div>
-        {sortingArray && actionBuffer && (
-          <AlgoChart key={chartKey} sortingArray={sortingArray} actionBuffer={actionBuffer} stepTime={stepTime} />
+        {startingArray && (
+          <AlgoChart key={chartKey} startingArray={startingArray} actionBuffer={actionBuffer} stepTime={stepTime} />
         )}
         <Button onClick={() => randomizeArray()} color={'primary'}>
-          Randomize Array
+          Randomize Values
         </Button>
+        <Button color={'primary'} onClick={() => sort(bubbleSort)}>
+          Bubble Sort
+        </Button>
+        <Button color={'primary'}>Heap Sort</Button>
+        <Button color={'primary'}>Quick Sort</Button>
         <Slider
           defaultValue={stepTime}
           aria-labelledby="discrete-slider"

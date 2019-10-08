@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
 import Chart from 'chart.js';
 
 export type ActionBuffer = {
@@ -9,8 +8,8 @@ export type ActionBuffer = {
 };
 
 interface AlgoChartProps {
-  sortingArray: number[];
-  actionBuffer: ActionBuffer[];
+  startingArray: number[];
+  actionBuffer: ActionBuffer[] | undefined;
   stepTime: number;
 }
 
@@ -34,7 +33,7 @@ export default function AlgoChart(props: AlgoChartProps) {
     }
 
     // Labels and Data
-    let sortingData = props.sortingArray;
+    let sortingData = props.startingArray;
     let sortingLabels: string[] = [];
     let barColors: string[] = [];
     sortingData.forEach(() => {
@@ -51,7 +50,7 @@ export default function AlgoChart(props: AlgoChartProps) {
         datasets: [
           {
             label: 'Value',
-            data: props.sortingArray,
+            data: sortingData,
             fill: false,
             lineTension: 0,
             borderColor: '#0b1736',
@@ -82,9 +81,10 @@ export default function AlgoChart(props: AlgoChartProps) {
     // When dismounting destroy char
     return () => {
       if (chart) {
-        chart.destroy();
+        chart.clear();
       }
     };
+    // eslint-disable-next-line
   }, []);
 
   // Comsumes the action buffer, and comapres / swaps elements
@@ -134,13 +134,15 @@ export default function AlgoChart(props: AlgoChartProps) {
     if (actionBuffer && chartData) {
       stepBuffer(chartData, actionBuffer);
     }
+    // eslint-disable-next-line
   }, [actionBuffer]);
 
   // Resets data if sorting array changes
   useEffect(() => {
     setActionBuffer(props.actionBuffer);
-    setChartData(props.sortingArray);
-  }, [props.sortingArray]);
+    setChartData(props.startingArray);
+    // eslint-disable-next-line
+  }, [props.startingArray, props.actionBuffer]);
 
   // Changes step time
   useEffect(() => {
