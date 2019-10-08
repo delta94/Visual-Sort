@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/Doctor-Sort/static/css/main.3fdc8253.chunk.css",
-    "main.js": "/Doctor-Sort/static/js/main.baf22c60.chunk.js",
-    "main.js.map": "/Doctor-Sort/static/js/main.baf22c60.chunk.js.map",
-    "runtime-main.js": "/Doctor-Sort/static/js/runtime-main.231c31c6.js",
-    "runtime-main.js.map": "/Doctor-Sort/static/js/runtime-main.231c31c6.js.map",
-    "static/js/2.6c7c863f.chunk.js": "/Doctor-Sort/static/js/2.6c7c863f.chunk.js",
-    "static/js/2.6c7c863f.chunk.js.map": "/Doctor-Sort/static/js/2.6c7c863f.chunk.js.map",
-    "index.html": "/Doctor-Sort/index.html",
-    "precache-manifest.964669d884ae8c7b8994c24eff022d43.js": "/Doctor-Sort/precache-manifest.964669d884ae8c7b8994c24eff022d43.js",
-    "service-worker.js": "/Doctor-Sort/service-worker.js",
-    "static/css/main.3fdc8253.chunk.css.map": "/Doctor-Sort/static/css/main.3fdc8253.chunk.css.map"
+    "main.css": "/Visual-Sort/static/css/main.3fdc8253.chunk.css",
+    "main.js": "/Visual-Sort/static/js/main.0523f938.chunk.js",
+    "main.js.map": "/Visual-Sort/static/js/main.0523f938.chunk.js.map",
+    "runtime-main.js": "/Visual-Sort/static/js/runtime-main.8ab4b8ea.js",
+    "runtime-main.js.map": "/Visual-Sort/static/js/runtime-main.8ab4b8ea.js.map",
+    "static/js/2.73a80217.chunk.js": "/Visual-Sort/static/js/2.73a80217.chunk.js",
+    "static/js/2.73a80217.chunk.js.map": "/Visual-Sort/static/js/2.73a80217.chunk.js.map",
+    "index.html": "/Visual-Sort/index.html",
+    "precache-manifest.d0de86c8990cab63301565ec4505e5e4.js": "/Visual-Sort/precache-manifest.d0de86c8990cab63301565ec4505e5e4.js",
+    "service-worker.js": "/Visual-Sort/service-worker.js",
+    "static/css/main.3fdc8253.chunk.css.map": "/Visual-Sort/static/css/main.3fdc8253.chunk.css.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.231c31c6.js",
-    "static/js/2.6c7c863f.chunk.js",
+    "static/js/runtime-main.8ab4b8ea.js",
+    "static/js/2.73a80217.chunk.js",
     "static/css/main.3fdc8253.chunk.css",
-    "static/js/main.baf22c60.chunk.js"
+    "static/js/main.0523f938.chunk.js"
   ]
 }
