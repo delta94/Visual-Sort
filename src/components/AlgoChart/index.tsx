@@ -2,12 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import Chart from 'chart.js';
 
-const useStyles = makeStyles(theme => ({
-  chartContainer: {
-    display: 'flex'
-  }
-}));
-
 export type ActionBuffer = {
   type: 'swap' | 'compare';
   i: number;
@@ -21,16 +15,15 @@ interface AlgoChartProps {
 }
 
 // Colors for bar chart
-const BAR_COLOR = '#55bae7';
+const BAR_COLOR = '#7289da';
+const COMPARE_COLOR = 'green';
+let stepTime = 400;
 
 export default function AlgoChart(props: AlgoChartProps) {
-  const classes = useStyles({});
   const analyticChartRef = useRef<HTMLCanvasElement>(null);
   const [chart, setChart] = useState<Chart>();
   const [chartData, setChartData] = useState<number[]>();
   const [actionBuffer, setActionBuffer] = useState<ActionBuffer[]>();
-  const [stepTime, setStepTime] = useState(400);
-  let running = true;
 
   // Component did mount, mount the Chart onto canvas
   useEffect(() => {
@@ -106,8 +99,8 @@ export default function AlgoChart(props: AlgoChartProps) {
       arr[buffer.i] = arr[buffer.j];
       arr[buffer.j] = temp;
     } else if (actionBuffer[0].type === 'compare' && actionBuffer.length > 1) {
-      colors[buffer.i] = 'green';
-      colors[buffer.j] = 'green';
+      colors[buffer.i] = COMPARE_COLOR;
+      colors[buffer.j] = COMPARE_COLOR;
     }
 
     // Remove action from buffer
@@ -116,8 +109,8 @@ export default function AlgoChart(props: AlgoChartProps) {
   };
 
   // Steps through the buffer actions
-  let stepBuffer = async (dataArr: number[], actionBuffer: ActionBuffer[], i: number) => {
-    if (chart && running) {
+  let stepBuffer = async (dataArr: number[], actionBuffer: ActionBuffer[]) => {
+    if (chart) {
       // Use our action buffer to sort the temp array in slow time
       let result = consumeActionBuffer(dataArr, actionBuffer);
       // If we have a dataset, update it
@@ -130,7 +123,7 @@ export default function AlgoChart(props: AlgoChartProps) {
       // If buffer contains actions, do them till were empty!
       if (actionBuffer.length > 0) {
         await new Promise(() => {
-          setTimeout(() => stepBuffer(dataArr, actionBuffer, i + 1), stepTime);
+          setTimeout(() => stepBuffer(dataArr, actionBuffer), stepTime);
         });
       }
     }
@@ -139,7 +132,7 @@ export default function AlgoChart(props: AlgoChartProps) {
   // When action buffer changes, animate the sorting sequence
   useEffect(() => {
     if (actionBuffer && chartData) {
-      stepBuffer(chartData, actionBuffer, 0);
+      stepBuffer(chartData, actionBuffer);
     }
   }, [actionBuffer]);
 
@@ -151,11 +144,11 @@ export default function AlgoChart(props: AlgoChartProps) {
 
   // Changes step time
   useEffect(() => {
-    setStepTime(props.stepTime);
+    stepTime = props.stepTime;
   }, [props.stepTime]);
 
   return (
-    <div className={classes.chartContainer}>
+    <div>
       <canvas id="analyticChart" ref={analyticChartRef} />
     </div>
   );

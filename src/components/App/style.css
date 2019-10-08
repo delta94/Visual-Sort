@@ -1,7 +1,13 @@
 html {
   font-family: 'Roboto';
+  height: 100%;
 }
 body {
   margin: 0;
-  background: #eeeeee;
+  background: #121212;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
 }
