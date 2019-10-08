@@ -27,6 +27,7 @@ export default function AlgoChart(props: AlgoChartProps) {
   const analyticChartRef = useRef<HTMLCanvasElement>(null);
   const [chart, setChart] = useState<Chart>();
   const [chartData, setChartData] = useState([...props.sortingArray]);
+  const [actionBuffer, setActionBuffer] = useState([...props.actionBuffer]);
 
   // Component did mount, mount the Chart onto canvas
   useEffect(() => {
@@ -104,6 +105,7 @@ export default function AlgoChart(props: AlgoChartProps) {
     return { arr: arr, colors: colors };
   };
 
+  // When action buffer changes, animate the sorting sequence
   useEffect(() => {
     // Steps through the buffer actions
     const stepBuffer = async (dataArr: number[], actionBuffer: ActionBuffer[]) => {
@@ -121,14 +123,20 @@ export default function AlgoChart(props: AlgoChartProps) {
       // If buffer contains actions, do them till were empty!
       if (actionBuffer.length > 0) {
         await new Promise(() => {
-          setTimeout(() => stepBuffer(dataArr, actionBuffer), 300);
+          setTimeout(() => stepBuffer(dataArr, actionBuffer), 100);
         });
       }
     };
 
     // Start the set buffer
-    stepBuffer(chartData, props.actionBuffer);
-  }, [props.actionBuffer]);
+    stepBuffer([...chartData], props.actionBuffer);
+  }, [actionBuffer]);
+
+  // When sorting array changes, set chart data and action buffer
+  useEffect(() => {
+    setActionBuffer(props.actionBuffer);
+    setChartData(props.sortingArray);
+  }, [props.sortingArray]);
 
   return (
     <div className={classes.chartContainer}>
