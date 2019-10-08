@@ -17,6 +17,7 @@ export type ActionBuffer = {
 interface AlgoChartProps {
   sortingArray: number[];
   actionBuffer: ActionBuffer[];
+  stepTime: number;
 }
 
 // Colors for bar chart
@@ -26,8 +27,10 @@ export default function AlgoChart(props: AlgoChartProps) {
   const classes = useStyles({});
   const analyticChartRef = useRef<HTMLCanvasElement>(null);
   const [chart, setChart] = useState<Chart>();
-  const [chartData, setChartData] = useState([...props.sortingArray]);
-  const [actionBuffer, setActionBuffer] = useState([...props.actionBuffer]);
+  const [chartData, setChartData] = useState<number[]>();
+  const [actionBuffer, setActionBuffer] = useState<ActionBuffer[]>();
+  const [stepTime, setStepTime] = useState(400);
+  let running = true;
 
   // Component did mount, mount the Chart onto canvas
   useEffect(() => {
@@ -38,7 +41,7 @@ export default function AlgoChart(props: AlgoChartProps) {
     }
 
     // Labels and Data
-    let sortingData = chartData;
+    let sortingData = props.sortingArray;
     let sortingLabels: string[] = [];
     let barColors: string[] = [];
     sortingData.forEach(() => {
@@ -55,7 +58,7 @@ export default function AlgoChart(props: AlgoChartProps) {
         datasets: [
           {
             label: 'Value',
-            data: sortingData,
+            data: props.sortingArray,
             fill: false,
             lineTension: 0,
             borderColor: '#0b1736',
@@ -82,6 +85,13 @@ export default function AlgoChart(props: AlgoChartProps) {
     });
 
     setChart(tempChart);
+
+    // When dismounting destroy char
+    return () => {
+      if (chart) {
+        chart.destroy();
+      }
+    };
   }, []);
 
   // Comsumes the action buffer, and comapres / swaps elements
@@ -105,38 +115,44 @@ export default function AlgoChart(props: AlgoChartProps) {
     return { arr: arr, colors: colors };
   };
 
-  // When action buffer changes, animate the sorting sequence
-  useEffect(() => {
-    // Steps through the buffer actions
-    const stepBuffer = async (dataArr: number[], actionBuffer: ActionBuffer[]) => {
-      if (chart) {
-        // Use our action buffer to sort the temp array in slow time
-        let result = consumeActionBuffer(dataArr, actionBuffer);
-        // If we have a dataset, update it
-        if (chart.data.datasets) {
-          chart.data.datasets[0].data = result.arr;
-          chart.data.datasets[0].backgroundColor = result.colors;
-        }
-        chart.update();
+  // Steps through the buffer actions
+  let stepBuffer = async (dataArr: number[], actionBuffer: ActionBuffer[], i: number) => {
+    if (chart && running) {
+      // Use our action buffer to sort the temp array in slow time
+      let result = consumeActionBuffer(dataArr, actionBuffer);
+      // If we have a dataset, update it
+      if (chart.data.datasets) {
+        chart.data.datasets[0].data = result.arr;
+        chart.data.datasets[0].backgroundColor = result.colors;
       }
+      chart.update();
 
       // If buffer contains actions, do them till were empty!
       if (actionBuffer.length > 0) {
         await new Promise(() => {
-          setTimeout(() => stepBuffer(dataArr, actionBuffer), 100);
+          setTimeout(() => stepBuffer(dataArr, actionBuffer, i + 1), stepTime);
         });
       }
-    };
+    }
+  };
 
-    // Start the set buffer
-    stepBuffer([...chartData], props.actionBuffer);
+  // When action buffer changes, animate the sorting sequence
+  useEffect(() => {
+    if (actionBuffer && chartData) {
+      stepBuffer(chartData, actionBuffer, 0);
+    }
   }, [actionBuffer]);
 
-  // When sorting array changes, set chart data and action buffer
+  // Resets data if sorting array changes
   useEffect(() => {
     setActionBuffer(props.actionBuffer);
     setChartData(props.sortingArray);
   }, [props.sortingArray]);
+
+  // Changes step time
+  useEffect(() => {
+    setStepTime(props.stepTime);
+  }, [props.stepTime]);
 
   return (
     <div className={classes.chartContainer}>
