@@ -34,9 +34,9 @@ export default function Footer() {
   return (
     <footer className={classes.footer}>
       <Container className={classes.flex}>
-        <div>Lightning Link - 2019</div>
+        <div>Visual Sort - 2019</div>
         <div>
-          <IconButton title="Github Button" onClick={() => handleLink('https://github.com/ericellb/Doctor-Sort')}>
+          <IconButton title="Github Button" onClick={() => handleLink('https://github.com/ericellb/Visual-Sort')}>
             <svg
               className={classes.icons}
               xmlns="http://www.w3.org/2000/svg"
