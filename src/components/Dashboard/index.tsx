@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Slider, makeStyles } from '@material-ui/core';
 import AlgoChart, { ActionBuffer } from '../AlgoChart';
-import { bubbleSort, SortingAlgorithms } from './Algos';
+import { selectionSort, bubbleSort, SortingAlgorithms, insertionSort } from './Algos';
 
 const useStyles = makeStyles(theme => ({
   mainContainer: {
@@ -18,6 +18,7 @@ export default function Dashboard() {
   const [startingArray, setStartingArray] = useState();
   const [actionBuffer, setActionBuffer] = useState<ActionBuffer[] | undefined>();
   const [stepTime, setStepTime] = useState(600);
+  const [pause, setPause] = useState(false);
 
   // Key to remove chart from dom
   const [chartKey, setChartKey] = useState(0);
@@ -43,6 +44,7 @@ export default function Dashboard() {
   const sort = (sortingAlgo: SortingAlgorithms) => {
     if (sortingArray) {
       let result = sortingAlgo([...sortingArray]);
+      setSortingArray(startingArray);
       setActionBuffer(result.actionBuffer);
     }
   };
@@ -56,7 +58,13 @@ export default function Dashboard() {
     <Container className={classes.mainContainer}>
       <div>
         {startingArray && (
-          <AlgoChart key={chartKey} startingArray={startingArray} actionBuffer={actionBuffer} stepTime={stepTime} />
+          <AlgoChart
+            key={chartKey}
+            startingArray={startingArray}
+            actionBuffer={actionBuffer}
+            stepTime={stepTime}
+            pause={pause}
+          />
         )}
         <Button onClick={() => randomizeArray()} color={'primary'}>
           Randomize Values
@@ -64,8 +72,15 @@ export default function Dashboard() {
         <Button color={'primary'} onClick={() => sort(bubbleSort)}>
           Bubble Sort
         </Button>
-        <Button color={'primary'}>Heap Sort</Button>
-        <Button color={'primary'}>Quick Sort</Button>
+        <Button color={'primary'} onClick={() => sort(selectionSort)}>
+          Selection Sort
+        </Button>
+        <Button color={'primary'} onClick={() => sort(insertionSort)}>
+          Insertion Sort
+        </Button>
+        <Button color={'primary'} onClick={() => setPause(!pause)}>
+          Pause / Play
+        </Button>
         <Slider
           defaultValue={stepTime}
           aria-labelledby="discrete-slider"

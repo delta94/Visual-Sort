@@ -11,12 +11,14 @@ interface AlgoChartProps {
   startingArray: number[];
   actionBuffer: ActionBuffer[] | undefined;
   stepTime: number;
+  pause: boolean;
 }
 
 // Colors for bar chart
 const BAR_COLOR = '#7289da';
 const COMPARE_COLOR = 'green';
 let stepTime = 400;
+let pause = false;
 
 export default function AlgoChart(props: AlgoChartProps) {
   const analyticChartRef = useRef<HTMLCanvasElement>(null);
@@ -110,7 +112,7 @@ export default function AlgoChart(props: AlgoChartProps) {
 
   // Steps through the buffer actions
   let stepBuffer = async (dataArr: number[], actionBuffer: ActionBuffer[]) => {
-    if (chart) {
+    if (chart && !pause) {
       // Use our action buffer to sort the temp array in slow time
       let result = consumeActionBuffer(dataArr, actionBuffer);
       // If we have a dataset, update it
@@ -126,6 +128,10 @@ export default function AlgoChart(props: AlgoChartProps) {
           setTimeout(() => stepBuffer(dataArr, actionBuffer), stepTime);
         });
       }
+    } else {
+      await new Promise(() => {
+        setTimeout(() => stepBuffer(dataArr, actionBuffer), 1000);
+      });
     }
   };
 
@@ -141,6 +147,7 @@ export default function AlgoChart(props: AlgoChartProps) {
   useEffect(() => {
     setActionBuffer(props.actionBuffer);
     setChartData(props.startingArray);
+    pause = false;
     // eslint-disable-next-line
   }, [props.startingArray, props.actionBuffer]);
 
@@ -148,6 +155,12 @@ export default function AlgoChart(props: AlgoChartProps) {
   useEffect(() => {
     stepTime = props.stepTime;
   }, [props.stepTime]);
+
+  // Changes pausing of animation
+  useEffect(() => {
+    pause = props.pause;
+    console.log(pause);
+  }, [props.pause]);
 
   return (
     <div>
