@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, makeStyles, Container } from '@material-ui/core';
+import React from 'react';
+import { AppBar, Toolbar, Typography, makeStyles, Container } from '@material-ui/core';
 import { Face } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({

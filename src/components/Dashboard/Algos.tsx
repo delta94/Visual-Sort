@@ -24,7 +24,7 @@ const lessThan = (arr: number[], i: number, j: number) => {
   return arr[i] - arr[j] > 0;
 };
 
-// Bubble sorts!
+// Bubble sorts
 export const bubbleSort = (arr: number[]) => {
   tempBuffer = [];
   let len = arr.length;
@@ -34,6 +34,38 @@ export const bubbleSort = (arr: number[]) => {
       if (lessThan(arr, j, j + 1)) {
         swap(arr, j, j + 1);
       }
+    }
+  }
+
+  return { dataSet: arr, actionBuffer: tempBuffer };
+};
+
+// Selection sort!
+export const selectionSort = (arr: number[]) => {
+  tempBuffer = [];
+  let len = arr.length;
+
+  for (let i = 0; i < len - 1; i++) {
+    let minIdx = i;
+    for (let j = i + 1; j < len; j++) {
+      if (lessThan(arr, minIdx, j)) {
+        minIdx = j;
+      }
+    }
+    swap(arr, minIdx, i);
+  }
+
+  return { dataSet: arr, actionBuffer: tempBuffer };
+};
+
+// Insertion Sort!
+export const insertionSort = (arr: number[]) => {
+  tempBuffer = [];
+  let len = arr.length;
+
+  for (let i = 1; i < len; i++) {
+    for (let j = i; j > 0 && lessThan(arr, j - 1, j); j--) {
+      swap(arr, j - 1, j);
     }
   }
 
